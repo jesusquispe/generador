@@ -1,160 +1,77 @@
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
-<?php
-include("model/ConexionBD.php");
-include("model/formsp/Form.php");
-include("model/formsp/Formbody.php");
-include("model/formsp/Formheader.php");
-include("model/formsp/Formfooter.php");
-include("model/formsp/Formmodalcontent.php");
-include("model/Carpeta.php");
-//include("model/controller/Create_controller.php");
-//include("model/javascript/Create_javascript.php");
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <title>Hello Generador!</title>
+  </head>
+  <body>
+    <div class="container">
+    <br><br>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>Generar Codigo</h1>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">                
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <button type="submit" class="btn btn-success" id="btn-javascript">JavaScrip</button>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <!--<button type="submit" class="btn btn-success" id="btn-form">Form</button>-->
+                        <a href="#" class="btn btn-success" id="btn-form">Llamar al contenido PHP</a>
+                        <div id="form_php">
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button type="submit" class="btn btn-success" id="btn-controller">Controller</button>
+                    </div>
+                </div>                
+            </div>
 
-include("model/table/Table_body.php");
+        </div>
+        
+    </div>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="assets/js/script.js"></script>
+    <script type="text/javascript">
+        const generar = new Generador();
+        eventos();
 
-$con = new ConexionBD();
+        function eventos(){
+            document.getElementById("btn-javascript").addEventListener("click",function(){
+                alert("java script");
+            });
 
+            /*document.getElementById("btn-form").addEventListener("click",function(e){
+            //    $("#llamar_AJAX").on("click", function(e){
+                e.preventDefault();
+                //generar.generator_form();
+                $("#form_php").load("prueva/form.php");
+                alert("entro");
+            });*/
+        }
 
-$form_inpur = new Form();
-$form_body =  new Formbody();
-$Formheader = new Formheader();
-$Formfooter = new Formfooter();
-$Formmodalcontent = new Formmodalcontent();
-
-$Carpeta = new Carpeta();
-
-$table_body = new Table_body();
-
-//$Create_controller = new Create_controller();
-
-//print_r($con->consulta_tablas());
-
-
-
-$array_num = count($con->consulta_tablas());
-
-//echo $Carpeta->table_html();
-
-//echo $Carpeta->form_html();
-echo $Carpeta->create_model_table();
-echo $Carpeta->create_controller_code();
-//echo $Carpeta->create_javascript_code();
-
-echo '<div class="container">';
-for($i = 0; $i < $array_num; ++$i){	
-	//echo $con->consulta_tablas()[$i]."<br/>";
-
-
-//------------------------------------------------------------------------------------
-$menu=$con->consulta_tablas()[$i];
-
-$table_thead_th[$i] = $con->consulta('SHOW COLUMNS FROM '.$menu.'');
-$table_thead_td[$i] = $con->consulta('SHOW COLUMNS FROM '.$menu.'');
-$table_thead_foot[$i] = $con->consulta('SHOW COLUMNS FROM '.$menu.'');
-
-//echo $Carpeta->create_form_php($menu);
-
-/*
-$carpeta = 'C:/AppServ/www/generador/admin/'.$menu.'';	
-if(!file_exists($carpeta)){			
-	mkdir($carpeta, 0777, true);
-	
-	$fomrulario = $carpeta;
-
-	$fp = fopen(''.$carpeta.'/fichero.html', 'w') or die('error creando fichero!');
-
-	fputs($fp,$fomrulario);
-
-	fclose($fp);
-
-}
-
-else{
-	echo "Error";
-}*/
-
-
-
-//-------------------------------inicio table------------------------------------
-
-
-echo $table_body->inicio_card($menu);
-
-	echo $table_body->incio_body_table();
-
-		echo $table_body->inicio_body_table_thead();
-
-		while ($row = $con->fetch_array($table_thead_th[$i]))
-		{
-			echo $table_body->menu_body_table_thead($row[Field]);
-		}
-		echo $table_body->fin_body_table_thead();
-
-		echo $table_body->inicio_body_table_tbody();
-
-
-		while ($row = $con->fetch_array($table_thead_td[$i]))
-		{
-			echo $table_body->menu_body_table_tbody($row[Field]);
-		}
-		echo $table_body->fin_body_table_tbody();
-
-		echo $table_body->inicio_body_table_tfoot();
-
-		while ($row = $con->fetch_array($table_thead_foot[$i]))
-		{
-			echo $table_body->menu_body_table_tfoot($row[Field]);
-		}
-		echo $table_body->fin_body_table_tfoot();
-
-	echo $table_body->fin_body_table();
-
-echo $table_body->fin_card();
-
-}
-//-------------------------------fin table------------------------------------
-//-------------------------Inicio de formulario------------------------------------------
-
-$array_num_form = count($con->consulta_tablas());
-
-for($i = 0; $i < $array_num_form; ++$i){	
-
-$menu=$con->consulta_tablas()[$i];
-
-$form_model_thead[$i] = $con->consulta('SHOW COLUMNS FROM '.$menu.'');
-
-	echo $Formmodalcontent->inicio_modal_content($menu);
-
-	echo $Formheader->form_header($menu);
-
-	echo $form_body->inicio_body();
-
-	while ($row = $con->fetch_array($form_model_thead[$i])) 
-	{
-		echo $form_inpur->form_input($row[Field]);
-		
-	}
-
-	echo $form_body->fin_body();
-
-	echo $Formfooter->form_footer();
-
-	echo $Formmodalcontent->inicio_modal_content();
-
-}
-//-----------------fin del formulario---------------------------------------------------
-	echo '</div>';
-
-
-//------------------------------------------------------------------------------------
-?>
+        $(document).ready(function(){			
+			$("#btn-form").on("click", function(e){
+				e.preventDefault();
+                $("#form_php").load("prueva/form.php");
+			});
+		});
+        
+        
+    </script>
+  </body>
+</html>
