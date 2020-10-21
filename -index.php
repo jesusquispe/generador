@@ -7,6 +7,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <?php
+
 include("model/ConexionBD.php");
 include("model/formsp/Form.php");
 include("model/formsp/Formbody.php");
@@ -14,6 +15,8 @@ include("model/formsp/Formheader.php");
 include("model/formsp/Formfooter.php");
 include("model/formsp/Formmodalcontent.php");
 include("model/Carpeta.php");
+
+
 //include("model/controller/Create_controller.php");
 //include("model/javascript/Create_javascript.php");
 

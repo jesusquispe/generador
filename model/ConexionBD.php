@@ -3,7 +3,7 @@ class ConexionBD
 {
 	private $conexion;
 	private $total_consulta;
-	private $name_bd= "db_mini_interal_1";
+	private $name_bd= "crud";
 	protected $name_folder = "generador";
 
 	
@@ -88,10 +88,6 @@ class ConexionBD
 		
 	}
 
-
-
 }
-
-
 
 ?>

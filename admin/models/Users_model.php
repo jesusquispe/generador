@@ -1,12 +1,12 @@
 
             
 <?php
-    class Costos_model extends CI_Model {
+    class Users_model extends CI_Model {
         
                 
         public function get_entries()
         {
-                $query = $this->db->get('costos');
+                $query = $this->db->get('users');
                 if(count($query->result()) > 0){
                     return $query->result();
                 }
@@ -15,19 +15,19 @@
         
                 
         public function delete_entry($id){
-            return $this->db->delete('costos', array('id' => $id));
+            return $this->db->delete('users', array('id' => $id));
         }
                 
         public function insert_entry($data)
         {
-            return $this->db->insert('costos', $data);
+            return $this->db->insert('users', $data);
         }
         
                 
         public function single_entry($id)
         {
             $this->db->select("*");
-            $this->db->from("costos");
+            $this->db->from("users");
             $this->db->where("id",$id);
             $query = $this->db->get();
             if(count($query->result()) > 0){
@@ -39,7 +39,7 @@
                 
         public function update_entry($data)
         {
-            return $this->db->update('costos', $data, array('id' => $data['id']));
+            return $this->db->update('users', $data, array('id' => $data['id']));
         }
         
             

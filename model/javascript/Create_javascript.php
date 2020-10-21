@@ -5,7 +5,7 @@ echo "<p>entro pero </p>";
 class Create_javascript  extends ConexionBD 
 {
 
-    private $url ='http://localhost/mini-interal/';
+    private $url ='http://localhost/crud/';
     public function __construct(){
         return "<h1>Entro</h1>";
     }
