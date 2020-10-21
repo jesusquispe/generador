@@ -22,23 +22,25 @@
             <div class="card-body">                
                 <div class="row">
                     <div class="col-md-4 text-center">
-                        <button type="submit" class="btn btn-success" id="btn-javascript">JavaScrip</button>
+                        <button type="submit" class="btn btn-success" id="btn-javascript">View Codeinaiter</button>
                     </div>
                     <div class="col-md-4 text-center">
-                        <!--<button type="submit" class="btn btn-success" id="btn-form">Form</button>-->
-                        <a href="#" class="btn btn-success" name="form" id="btn_form" value="1">Llamar al contenido PHP</a>
-                        <div id="form_php">
+                        <button type="submit" class="btn btn-success" id="btn_model">Model Codeinaiter</button>
+                        <div id="js_model">
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
-                        <button type="submit" class="btn btn-success" id="btn-controller">Controller</button>
+                        <button type="submit" class="btn btn-success" id="btn_controller">Controller Codeinaiter</button>
+                        <div id="js_controller">
+                        </div>
                     </div>
                 </div>
                 <br><br>
                 <div class="row">
                     <div class="col-md-4 text-center">
-                        <button type="submit" class="btn btn-success" id="btn_script">Model Codeinaiter</button>
-                        <div id="js_script">
+                        
+                        <a href="#" class="btn btn-success" name="form" id="btn_form" value="1">Generation Ajax </a>
+                        <div id="form_php">
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
@@ -68,7 +70,7 @@
 
         function eventos(){
             document.getElementById("btn-javascript").addEventListener("click",function(){
-                alert("java script");
+                alert("java script nonon");
             });
             document.getElementById("btn_form").addEventListener("click",function(){
                 $("#form_php").load("file_creator/form.php");            
@@ -76,8 +78,12 @@
 
             /* ----------------------------------------------------------- */
 
-            document.getElementById("btn_script").addEventListener("click",function(){
-                $("#js_script").load("file_creator/script.php");
+            document.getElementById("btn_model").addEventListener("click",function(){
+                $("#js_model").load("file_creator/model.php");
+            });
+            
+            document.getElementById("btn_controller").addEventListener("click",function(){
+                $("#js_controller").load("file_creator/controller.php");
             });
            
         }

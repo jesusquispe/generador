@@ -240,6 +240,7 @@ class Carpeta extends ConexionBD
             $this->create_controller($table, $code);
         }
     }
+    
     public function create_javascript_code()
     {
         $javascript = new Create_javascript();
