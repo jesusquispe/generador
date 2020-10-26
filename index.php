@@ -67,6 +67,11 @@
         <div class="card">
             <div class="card-body">                
                 <div class="row">
+                    <div class="col-md-4 text-center">
+                        <button type="submit" class="btn btn-success" id="btn_dt_view">View Codeinaiter</button>
+                        <div id="dt_view_table">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,7 +121,13 @@
            
         }
 
-      		
+      	eventos_datatable();
+        function eventos_datatable(){
+            //Generador de formulario
+            document.getElementById("btn_dt_view").addEventListener("click",function(){                
+                $("#dt_view_table").load("datatable_file_creator/dt_view_table.php");
+            });
+        }
 			
     </script>
   </body>
