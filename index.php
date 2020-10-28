@@ -77,6 +77,21 @@
                         <div id="dt_view_form">
                         </div>
                     </div>
+                    <div class="col-md-4 text-center">
+                        <button type="submit" class="btn btn-success" id="btn_dt_model">Model Codeinaiter</button>
+                        <div id="dt_model">
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                    <button type="submit" class="btn btn-success" id="btn_dt_controller">Controller Codeinaiter</button>
+                        <div id="dt_controller">
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
@@ -135,6 +150,14 @@
 
             document.getElementById("btn_dt_view_form").addEventListener("click",function(){                
                 $("#dt_view_form").load("datatable_file_creator/dt_view_form.php");                
+            });
+
+            document.getElementById("btn_dt_model").addEventListener("click",function(){                
+                $("#dt_model").load("datatable_file_creator/dt_model.php");                
+            });
+
+            document.getElementById("btn_dt_controller").addEventListener("click",function(){                
+                $("#dt_controller").load("datatable_file_creator/dt_controller.php");                
             });
 
         }

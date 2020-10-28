@@ -66,7 +66,7 @@ class Create_model{
     {
         return '
     }
-?>
+
         ';
     }
 
