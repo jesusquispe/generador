@@ -157,7 +157,7 @@
             });
 
             document.getElementById("btn_dt_controller").addEventListener("click",function(){                
-                $("#dt_controller").load("datatable_file_creator/dt_controller.php");                
+                $("#dt_controller").load("datatable_file_creator/dt_controller.php");
             });
 
         }

@@ -1,4 +1,5 @@
 <?php
+//include("../../datatable_admin/app/Validate.php");
 class Create_controller{
 
     public function mayuscula($val)
@@ -41,6 +42,8 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             $this->load->view(\''.$name_table.'_view\');
         }';
     }
+
+   
     public function ajax_list_start($name_table)
     {
         return '
@@ -91,7 +94,7 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
         }';
     }
 
-    public function ajax_edit_start($name_table){
+ /*   public function ajax_edit_start($name_table){
         return '
         public function ajax_edit($id)
         {
@@ -109,9 +112,11 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode($data);
         }';
     }
+    */
     /*--------------------Generador de insertar--------------------------------------- */
+/*
     public function ajax_add_start()
-    {
+    {       
         return '
         public function ajax_add()
         {
@@ -149,11 +154,13 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode(array("status" => TRUE));
         }';
     }
-
+*/
     /*----------------------------------------------------------- */
     /*---------------------Ajax Actualizar -------------------------------------- */
+/*
     public function ajax_update_start()
     {
+
         return '
         public function ajax_update()
         {
@@ -174,8 +181,11 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
     {
         return '';
     }
+
+*/
     /*--------------------------------------------------------------------------------------- */
     /*-------------------------Eliminar------------------------------------------------------ */
+/*
     public function ajax_delete_start()
     {
         return '
@@ -201,5 +211,7 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode(array("status" => TRUE));
         }';
     }
+
+*/
 
 }
