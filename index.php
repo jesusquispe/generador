@@ -90,7 +90,11 @@
                         <div id="dt_controller">
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-center">
+                    <button type="submit" class="btn btn-success" id="btn_dt_ajax_dataTable">Ajax Data Table Codeinaiter</button>
+                        <div id="dt_ajax_dataTable">
+                        </div>
+                    </div>
                     <div class="col-md-4"></div>
                 </div>
             </div>
@@ -158,6 +162,10 @@
 
             document.getElementById("btn_dt_controller").addEventListener("click",function(){                
                 $("#dt_controller").load("datatable_file_creator/dt_controller.php");
+            });
+
+            document.getElementById("btn_dt_ajax_dataTable").addEventListener("click",function(){ 
+                $("#dt_ajax_dataTable").load("datatable_file_creator/dt_javascript.php");
             });
 
         }

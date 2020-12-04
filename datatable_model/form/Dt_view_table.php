@@ -1,6 +1,22 @@
 <?php
 class Dt_view_table{
 
+    public function container_start($name_table)
+    {
+        return '
+<div class="container">
+    <h1 style="font-size:20pt">Ajax CRUD with Bootstrap modals and Datatables with Image Upload</h1>
+
+    <h3>'.$name_table.' Data</h3>
+    <br />';
+    }
+    public function container_end()
+    {
+        return '
+</div>
+<div id="list_img">
+</div>';
+    }
     public function button_modal_add($name_table)
     {
         return '
@@ -38,10 +54,13 @@ class Dt_view_table{
             </thead>';
     }
 
-    public function thead_th_body($name_attribute)
+    public function thead_th_body($name_attribute, $tipo,$key)
     {
-        return '
+        if($key != 'PRI'){
+            return '
                     <th>'.$name_attribute.'</th>';
+        }
+        
     }
 
     public function thead_body_piece_start()
@@ -94,10 +113,13 @@ class Dt_view_table{
                     <th>Action</th>';
     }
 
-    public function tfoot_th_body($name_attribute)
+    public function tfoot_th_body($name_attribute, $tipo, $key)
     {
-        return '
+        if($key != 'PRI'){
+            return '
                     <th>'.$name_attribute.'</th>';
+        }
+        
     }
 
     

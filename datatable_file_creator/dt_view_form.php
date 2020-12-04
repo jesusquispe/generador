@@ -32,7 +32,7 @@ class Carpeta extends ConexionBD{
                             $input_hidden = $form_html->input_hidden();
                             $form_body_start = $form_html->form_body_start();
                                 while($row = $this->fetch_array($form_model_thead[$i])){
-                                    $input[] = $form_html->form_group_input($row[Field], $row[Type]);
+                                    $input[] = $form_html->form_group_input($row[Field], $row[Type], $row[Key]);
                                 }
 
                             $form_body_end = $form_html->form_body_end();

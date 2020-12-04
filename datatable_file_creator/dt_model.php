@@ -27,14 +27,17 @@ class Carpeta extends ConexionBD
             $order = array();
             $search = array();
 
-            $table=$this->ultimo_caracter($this->consulta_tablas()[$i]);
+            //$table=$this->ultimo_caracter($this->consulta_tablas()[$i]);
+            $table=$this->consulta_tablas()[$i];            
 
             $order_start[$i] = $this->consulta('SHOW COLUMNS FROM '.$table.'');
             $search_start[$i] = $this->consulta('SHOW COLUMNS FROM '.$table.'');
 
+            $tables = $this->ultimo_caracter($table);
+
             $basepath = $Create_model->basepath();
-            $class_start = $Create_model->class_start($table);
-            $variable = $Create_model->variable($table);
+            $class_start = $Create_model->class_start($tables);
+            $variable = $Create_model->variable($tables);
 
             //Ordenar en data datatable desc y asc
             $variable_column_order_start = $Create_model->variable_column_order_start();
@@ -93,12 +96,13 @@ class Carpeta extends ConexionBD
     public function create_model_php($table, $model)
     {
         $carpeta_url = 'C:/AppServ/www/'.$this->name_folder.'/'.$this->model.'';
+        $tables = $this->ultimo_caracter($table);
         if (file_exists($carpeta_url)){
             //mkdir($carpeta_url, 0777, true);
            
             $formulario_table = $model;
 
-            $form_table = fopen(''.$carpeta_url.'/'.$this->mayuscula($table).'_model.php', 'w') or die('error creando fichero!');            
+            $form_table = fopen(''.$carpeta_url.'/'.$this->mayuscula($tables).'_model.php', 'w') or die('error creando fichero!');            
 
             fputs($form_table, $formulario_table);
             fclose($form_table);

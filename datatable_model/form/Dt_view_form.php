@@ -62,7 +62,7 @@ class Dt_view_form{
                     </div>';
     }
 
-    public function form_group_input($name_attribute, $tipo)
+    public function form_group_input($name_attribute, $tipo, $key)
     {
         if($tipo == 'varchar(100)')
         {            
@@ -105,8 +105,21 @@ class Dt_view_form{
         {
             return '
                         <input type="hidden" value="" name="'.$name_attribute.'"/>';
-        }else if($tipo == 'int(11)'){
+        }else if($key == 'PRI'){
             return false;
+        }else if($tipo == 'int(11)'){
+            return '
+                        <div class="form-group">
+                            <label class="control-label col-md-3">'.$name_attribute.'</label>
+                            <div class="col-md-9">
+                                <select name="'.$name_attribute.'" class="form-control">
+                                    <option value="">--Select '.$name_attribute.'--</option>
+                                    <option value="1">uno</option>
+                                    <option value="2">dos</option>
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>';
         }
         else{
             return '

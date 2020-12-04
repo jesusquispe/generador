@@ -59,7 +59,7 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
                 $row = array();
                 $row[] = $no;';
     }
-    public function ajax_list_body($name_table, $tupla, $type)
+    public function ajax_list_body($name_table, $tupla, $type, $key)
     {
         if($type=='varchar(255)'){
             return '
@@ -67,7 +67,7 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
                 $row[] = \'<a href="\'.base_url(\'upload/\'.$'.$name_table.'->'.$tupla.').\'" target="_blank"><img src="\'.base_url(\'upload/\'.$'.$name_table.'->'.$tupla.').\'" class="img-responsive" /></a>\';
             else
                 $row[] = \'(No photo)\';';
-        }else{
+        }else if($key!='PRI'){
             return '
                 $row[] = $'.$name_table.'->'.$tupla.';';
         }
@@ -94,12 +94,13 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
         }';
     }
 
- /*   public function ajax_edit_start($name_table){
+    public function ajax_edit_start($name_table){
         return '
         public function ajax_edit($id)
         {
             $data = $this->'.$name_table.'->get_by_id($id);';
     }
+
     public function ajax_edit_body($type, $tupla)
     {
         if($type=='date'){
@@ -112,9 +113,9 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode($data);
         }';
     }
-    */
+   
     /*--------------------Generador de insertar--------------------------------------- */
-/*
+
     public function ajax_add_start()
     {       
         return '
@@ -124,17 +125,20 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             
             $data = array(';
     }
-    public function ajax_add_body_start($tupla)
+    public function ajax_add_body_start($tupla, $type, $key)
     {
-        return '
-            \''.$tupla.'\' => $this->input->post(\''.$tupla.'\'),';
+        if($key!='PRI' && $type!='varchar(255)'){
+            return '
+                \''.$tupla.'\' => $this->input->post(\''.$tupla.'\'),';
+        }
+        
     }
     public function ajax_add_body_end()
     {
         return '
         );';
     }
-    public function ajax_add_photo($type)
+    public function ajax_add_photo($tupla, $type)
     {
         if($type=='varchar(255)'){
             return '
@@ -154,10 +158,10 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode(array("status" => TRUE));
         }';
     }
-*/
+
     /*----------------------------------------------------------- */
     /*---------------------Ajax Actualizar -------------------------------------- */
-/*
+
     public function ajax_update_start()
     {
 
@@ -167,32 +171,72 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             $this->_validate();
             $data = array(';
     }
-    public function ajax_update_body()
+    public function ajax_update_body($tupla, $type, $key)
     {
-        return '
-        \''.$tupla.'\' => $this->input->post(\''.$tupla.'\'),';
+        if($key!='PRI' && $type!='varchar(255)'){
+            return '
+            \''.$tupla.'\' => $this->input->post(\''.$tupla.'\'),';
+        }
+        
     }
     public function ajax_update_body_end()
     {
         return '
         );';
     }
-    public function ajax_update_end()
+    public function ajax_update_remove_photo($tupla, $type)
     {
-        return '';
+        if($type=='varchar(255)'){
+            return '
+            if($this->input->post(\'remove_photo\')) // if remove photo checked
+            {
+                if(file_exists(\'upload/\'.$this->input->post(\'remove_photo\')) && $this->input->post(\'remove_photo\'))
+                    unlink(\'upload/\'.$this->input->post(\'remove_photo\'));
+                $data[\''.$tupla.'\'] = \'\';
+            }
+            ';
+        }
+       
     }
 
-*/
+    public function ajax_update_photo($name_table,$tupla,$type)
+    {
+        if($type=='varchar(255)'){
+            return '
+            if(!empty($_FILES[\''.$tupla.'\'][\'name\']))
+            {
+                $upload = $this->_do_upload();
+                
+                //delete file
+                $'.$name_table.' = $this->'.$name_table.'->get_by_id($this->input->post(\'id\'));
+                if(file_exists(\'upload/\'.$'.$name_table.'->'.$tupla.') && $'.$name_table.'->'.$tupla.')
+                    unlink(\'upload/\'.$'.$name_table.'->'.$tupla.');
+
+                $data[\''.$tupla.'\'] = $upload;
+            }
+            ';
+        }
+        
+    }
+
+    public function ajax_update_end($name_table)
+    {
+        return '
+        $this->'.$name_table.'->update(array(\'id\' => $this->input->post(\'id\')), $data);
+		echo json_encode(array("status" => TRUE));
+	}';
+    }
+
     /*--------------------------------------------------------------------------------------- */
     /*-------------------------Eliminar------------------------------------------------------ */
-/*
-    public function ajax_delete_start()
+
+    public function ajax_delete_start($name_table)
     {
         return '
         public function ajax_delete($id)
         {
             //delete file
-            $person = $this->person->get_by_id($id);';
+            $'.$name_table.' = $this->'.$name_table.'->get_by_id($id);';
     }
 
     public function ajax_delete_body($name_table, $tupla, $type)
@@ -211,7 +255,69 @@ class '.$this->mayuscula($table).' extends CI_Controller {';
             echo json_encode(array("status" => TRUE));
         }';
     }
+/*---------------------------------------------------------- */
+    public function ajax__do_upload($type)
+    {
+        if($type=='varchar(255)'){
+            return '
+        private function _do_upload()
+        {
+            $config[\'upload_path\']          = \'upload/\';
+            $config[\'allowed_types\']        = \'gif|jpg|png\';
+            $config[\'max_size\']             = 100; //set max size allowed in Kilobyte
+            $config[\'max_width\']            = 1000; // set max width image allowed
+            $config[\'max_height\']           = 1000; // set max height allowed
+            $config[\'file_name\']            = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
 
-*/
+            $this->load->library(\'upload\', $config);
+
+            if(!$this->upload->do_upload(\'photo\')) //upload and validate
+            {
+                $data[\'inputerror\'][] = \'photo\';
+                $data[\'error_string\'][] = \'Upload error: \'.$this->upload->display_errors(\'\',\'\'); //show ajax error
+                $data[\'status\'] = FALSE;
+                echo json_encode($data);
+                exit();
+            }
+            return $this->upload->data(\'file_name\');
+        }';
+        }
+        
+    }
+
+    public function ajax__validate_start()
+    {
+        return '
+        private function _validate()
+        {
+            $data = array();
+            $data[\'error_string\'] = array();
+            $data[\'inputerror\'] = array();
+            $data[\'status\'] = TRUE;';
+    }
+    public function ajax__validate_body( $tupla, $type, $key)
+    {
+        if($key!='PRI' && $type!='varchar(255)'){
+            return '
+            if($this->input->post(\''.$tupla.'\') == \'\')
+            {
+                $data[\'inputerror\'][] = \''.$tupla.'\';
+                $data[\'error_string\'][] = \''.$tupla.' is required\';
+                $data[\'status\'] = FALSE;
+            }';
+        }
+        
+    }
+    public function  ajax__validate_end()
+    {
+        return '
+            if($data[\'status\'] === FALSE)
+            {
+                echo json_encode($data);
+                exit();
+            }
+        }';
+    }
+
 
 }

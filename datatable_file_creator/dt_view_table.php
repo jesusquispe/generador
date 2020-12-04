@@ -11,6 +11,11 @@ class Carpeta extends ConexionBD
         return ucfirst($val);
     }
 
+    public function ultimo_caracter_delete($caracter)
+    {
+        return substr($caracter, 0, -1);
+    }
+
     public function table_html()
     {
         $table_html =  new Dt_view_table();
@@ -27,14 +32,18 @@ class Carpeta extends ConexionBD
             $table_thead_td[$i] = $this->consulta('SHOW COLUMNS FROM '.$table.'');
             $table_thead_foot[$i] = $this->consulta('SHOW COLUMNS FROM '.$table.'');
 
-            $button_add = $table_html->button_modal_add($table);
-            $button_reload = $table_html->button_modal_Reload($table);
+            $tables = $this->ultimo_caracter_delete($table);
+
+            $container_start = $table_html->container_start($tables);
+
+            $button_add = $table_html->button_modal_add($tables);
+            $button_reload = $table_html->button_modal_Reload($tables);
 
             $table_start = $table_html->table_start();
                 $table_thead_start = $table_html->thead_start();
                     $table_th_start = $table_html->thead_body_piece_start();
                         while($row = $this->fetch_array($table_thead_th[$i])){
-                            $thead[] = $table_html->thead_th_body($row[Field]);
+                            $thead[] = $table_html->thead_th_body($row[Field], $row[Type], $row[Key]);
                         }
                     $tabel_th_end = $table_html->thead_body_piece_end();
                 $table_thead_end = $table_html->thead_end();
@@ -44,16 +53,18 @@ class Carpeta extends ConexionBD
                 $tfoot_start = $table_html->tfoot_start();
                     $tfoot_th_start = $table_html->tfoot_body_piece_start();
                     while($row = $this->fetch_array($table_thead_foot[$i])){
-                        $tfoot[] = $table_html->tfoot_th_body($row[Field]);
+                        $tfoot[] = $table_html->tfoot_th_body($row[Field], $row[Type], $row[Key]);
                     }
                     $tfoot_th_end = $table_html->tfoot_body_piece_end();
                 $tfoot_end = $table_html->tfoot_end();
             $table_end =$table_html->table_end();
-            
+
+            $container_end = $table_html->container_end();
 
             $th = implode($thead);
             $th_foot = implode($tfoot);
             $union = "
+                {$container_start}
                     {$button_add}
                     {$button_reload}
                     {$table_start}
@@ -69,7 +80,8 @@ class Carpeta extends ConexionBD
                             {$th_foot}
                             {$tfoot_th_end}
                         {$tfoot_end}
-                    {$table_end}";
+                    {$table_end}
+                {$container_end}";
             $html =$union;
             $this->create_table_php($table, $html);
 
