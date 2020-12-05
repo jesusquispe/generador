@@ -43,9 +43,9 @@ class '.$this->mayuscula($table).'_model extends CI_Model {';
         var $column_search = array(';
     }
 
-    public function variable_table_body($attribute, $tipo)
+    public function variable_table_body($attribute, $tipo, $key)
     {        
-        if($tipo == 'int(11)'){
+        if($key == 'PRI'){
             return false;
         }else if($tipo == 'varchar(255)'){
             $valor_null = "null";
@@ -55,11 +55,16 @@ class '.$this->mayuscula($table).'_model extends CI_Model {';
         }
     }
 
-    public function variable_search($attribute, $tipo)
+    public function variable_search($attribute, $tipo, $key)
     {
-        if($tipo != 'int(11)' && $tipo != 'varchar(255)'){
+        /*if($tipo != 'int(11)' && $tipo != 'varchar(255)'){
+            return '\''.$attribute.'\',';
+        }*/
+        if($key != 'PRI'  && $tipo != 'varchar(255)')
+        {
             return '\''.$attribute.'\',';
         }
+
     }
 
     public function variable_table_end()

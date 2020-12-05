@@ -43,14 +43,14 @@ class Carpeta extends ConexionBD
             $variable_column_order_start = $Create_model->variable_column_order_start();
             while($row = $this->fetch_array($order_start[$i]))
             {
-                $order[] = $Create_model->variable_table_body($row[Field], $row[Type]);
+                $order[] = $Create_model->variable_table_body($row[Field], $row[Type], $row[Key]);
             }
             $variable_order_start_end = $Create_model->variable_table_end();
             //variable de busqueda por start en data table
             $variable_column_search_start = $Create_model->variable_column_search_start();
             while($row = $this->fetch_array($search_start[$i]))
             {
-                $search[] = $Create_model->variable_search($row[Field], $row[Type]);
+                $search[] = $Create_model->variable_search($row[Field], $row[Type], $row[Key]);
             }
             $variable_search_start_end = $Create_model->variable_table_end();
 

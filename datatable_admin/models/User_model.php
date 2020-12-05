@@ -6,9 +6,9 @@ class User_model extends CI_Model {
         var $table = 'users';
         var $order = array('id' => 'desc'); // default order
             
-        var $column_order = array('name','email','contrasenia','estado');
+        var $column_order = array('persons_id','name','email','contrasenia','estado');
             
-        var $column_search = array('name','email','contrasenia','estado');
+        var $column_search = array('persons_id','name','email','contrasenia','estado');
 
             
         public function __construct()
